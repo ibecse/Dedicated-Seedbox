@@ -2,7 +2,7 @@
 tput sgr0; clear
 
 ## Load Seedbox Components
-source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/seedbox_installation.sh)
+source <(wget -qO- https://raw.githubusercontent.com/ibecse/Seedbox-Components/main/seedbox_installation.sh)
 # Check if Seedbox Components is successfully loaded
 if [ $? -ne 0 ]; then
 	echo "Component ~Seedbox Components~ failed to load"
@@ -200,8 +200,8 @@ while getopts "u:p:c:q:l:rbvx3oh" opt; do
 	h ) # process option help
 		info "Help:"
 		info "Usage: ./Install.sh -u <username> -p <password> -c <Cache Size(unit:MiB)> -q <qBittorrent version> -l <libtorrent version> -b -v -r -3 -x -p"
-		info "Example: ./Install.sh -u jerry048 -p 1LDw39VOgors -c 3072 -q 4.3.9 -l v1.2.19 -b -v -r -3"
-		source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
+		info "Example: ./Install.sh -u ibecse -p 1LDw39VOgors -c 3072 -q 4.3.9 -l v1.2.19 -b -v -r -3"
+		source <(wget -qO- https://raw.githubusercontent.com/ibecse/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
 		seperator
 		info "Options:"
 		need_input "1. -u : Username"
@@ -228,7 +228,7 @@ while getopts "u:p:c:q:l:rbvx3oh" opt; do
 	\? ) 
 		info "Help:"
 		info_2 "Usage: ./Install.sh -u <username> -p <password> -c <Cache Size(unit:MiB)> -q <qBittorrent version> -l <libtorrent version> -b -v -r -3 -x -p"
-		info_2 "Example ./Install.sh -u jerry048 -p 1LDw39VOgors -c 3072 -q 4.3.9 -l v1.2.19 -b -v -r -3"
+		info_2 "Example ./Install.sh -u ibecse -p 1LDw39VOgors -c 3072 -q 4.3.9 -l v1.2.19 -b -v -r -3"
 		exit 1
 		;;
 	esac
@@ -245,7 +245,7 @@ echo -e "\n"
 
 
 # qBittorrent
-source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
+source <(wget -qO- https://raw.githubusercontent.com/ibecse/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
 # Check if qBittorrent install is successfully loaded
 if [ $? -ne 0 ]; then
 	fail_exit "Component ~qBittorrent install~ failed to load"
@@ -305,11 +305,11 @@ if [[ ! -z "$qb_install" ]]; then
 	fi
 	#Check if qBittorrent port is specified
 	if [ -z "$qb_port" ]; then
-		qb_port=8080
+		qb_port=24396
 	fi
 	#Check if qBittorrent incoming port is specified
 	if [ -z "$qb_incoming_port" ]; then
-		qb_incoming_port=45000
+		qb_incoming_port=38246
 	fi
 
 	## qBittorrent & libtorrent compatibility check
@@ -377,7 +377,7 @@ touch /root/.boot-script.sh && chmod +x /root/.boot-script.sh
 cat << EOF > /root/.boot-script.sh
 #!/bin/bash
 sleep 120s
-source <(wget -qO- https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/seedbox_installation.sh)
+source <(wget -qO- https://raw.githubusercontent.com/ibecse/Seedbox-Components/main/seedbox_installation.sh)
 # Check if Seedbox Components is successfully loaded
 if [ \$? -ne 0 ]; then
 	exit 1
@@ -386,7 +386,8 @@ set_txqueuelen_
 # Check for Virtual Environment since some of the tunning might not work on virtual machine
 systemd-detect-virt > /dev/null
 if [ \$? -eq 0 ]; then
-	disable_tso_
+	# disable_tso_
+        sleep 1s
 else
 	set_disk_scheduler_
 	set_ring_buffer_
